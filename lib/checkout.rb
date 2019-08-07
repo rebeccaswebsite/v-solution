@@ -23,10 +23,14 @@ class Checkout
 
         if running_total >= @promotional_rules["total_eligible_for_discount"]
             discount = @promotional_rules["discount"]
-            return running_total - ( discount.to_f / 100 * running_total )
+            return apply_discount(running_total, discount)
         else 
             return running_total
         end
+    end
+
+    def apply_discount(running_total, discount)
+        return running_total - ( discount.to_f / 100 * running_total )
     end
 
 end
