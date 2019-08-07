@@ -30,9 +30,3 @@ class Checkout
     end
 
 end
-
-promotional_rules = { "total_eligible_for_discount" => 60,
-                      "discount" => 10,
-                      "miminum_quantity" => 2,
-                      "price_drop" => 8.5
-                    }
