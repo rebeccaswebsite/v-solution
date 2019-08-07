@@ -14,7 +14,7 @@ class Checkout
         running_total = 0 
     
         if !@item
-          return total
+            return total
         end
             
         @item.split(",").inject(total) do |subtotal, item|
@@ -41,10 +41,9 @@ class Checkout
         bag = @item.split(",")
         if bag.uniq.length == bag.length
             return false
-          else
+        else
             return true
-          end
-          
+        end 
     end
 
 end
