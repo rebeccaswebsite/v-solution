@@ -6,6 +6,7 @@ class Checkout
 
     def scan(item)
         @item = item
+        @prices = {"001" => 9.25, "002" => 45, "003" => 19.95}
     end
 
     def total
@@ -17,20 +18,33 @@ class Checkout
         end
             
         @item.split(",").inject(total) do |subtotal, item|
-            subtotal += {"001" => 9.25, "002" => 45, "003" => 19.95}[item]
+            if duplicate_items?
+                @prices["001"] = 8.5
+            end
+            subtotal += @prices[item]
             running_total = subtotal
         end
 
         if running_total >= @promotional_rules["total_eligible_for_discount"]
             discount = @promotional_rules["discount"]
-            return apply_discount(running_total, discount)
+            return apply_discount(running_total, discount).round(2)
         else 
-            return running_total
+            return running_total.round(2)
         end
     end
 
     def apply_discount(running_total, discount)
         return running_total - ( discount.to_f / 100 * running_total )
+    end
+
+    def duplicate_items?
+        bag = @item.split(",")
+        if bag.uniq.length == bag.length
+            return false
+          else
+            return true
+          end
+          
     end
 
 end
