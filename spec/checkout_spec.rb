@@ -20,12 +20,12 @@ RSpec.describe Checkout do
     end
   
     context "when 002 is scanned" do
-      it "returns the total price 45.00" do
+      it "returns the total price 45" do
         checkout = Checkout.new
 
         checkout.scan("002")
-        
-        expect(checkout.total).to eq 45.00
+
+        expect(checkout.total).to eq 45
       end
     end
   
