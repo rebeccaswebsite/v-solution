@@ -10,6 +10,7 @@ class Checkout
 
     def total
         total = 0
+        running_total = 0 
     
         if !@item
           return total
@@ -17,12 +18,21 @@ class Checkout
             
         @item.split(",").inject(total) do |subtotal, item|
             subtotal += {"001" => 9.25, "002" => 45, "003" => 19.95}[item]
-          
+            running_total = subtotal
+        end
+
+        if running_total >= @promotional_rules["total_eligible_for_discount"]
+            discount = @promotional_rules["discount"]
+            return running_total - ( discount.to_f / 100 * running_total )
+        else 
+            return running_total
         end
     end
 
-    def apply_discount(sum, discount)
-        sum - ( discount.to_f / 100 * sum )
-    end
-
 end
+
+promotional_rules = { "total_eligible_for_discount" => 60,
+                      "discount" => 10,
+                      "miminum_quantity" => 2,
+                      "price_drop" => 8.5
+                    }
